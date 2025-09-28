@@ -1,0 +1,13 @@
+nohup: ignoring input
+
+> investsim-frontend@0.1.0 dev
+> next dev -p 5099
+
+   ▲ Next.js 14.0.4
+   - Local:        http://localhost:5099
+
+ ✓ Ready in 1579ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1252ms (495 modules)
+ ✓ Compiled in 164ms (253 modules)
+ ✓ Compiled /simulators in 227ms (473 modules)

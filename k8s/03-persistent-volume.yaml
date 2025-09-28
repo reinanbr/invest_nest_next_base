@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: investsim-data-pv
+  labels:
+    app: investsim-pro
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /opt/investsim-data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - node-name  # Substitua pelo nome do seu nó
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: investsim-data-pvc
+  namespace: investsim-pro
+  labels:
+    app: investsim-pro
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: local-storage

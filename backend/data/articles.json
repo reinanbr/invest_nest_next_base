@@ -1,0 +1,55 @@
+{
+  "articles": [
+    {
+      "id": 1,
+      "title": "CDB: Entendendo o Certificado de Depósito Bancário",
+      "slug": "cdb-basico",
+      "date": "2024-01-15",
+      "thumbUrl": "/api/images/thumbs/1.jpg",
+      "description": "Aprenda tudo sobre CDB, um dos investimentos de renda fixa mais populares do Brasil. Entenda rendimento, tributação e vantagens.",
+      "tags": ["cdb", "renda-fixa", "iniciantes"],
+      "readTime": 8
+    },
+    {
+      "id": 2,
+      "title": "IPO: Como Funciona uma Oferta Pública Inicial",
+      "slug": "ipo-conceitos",
+      "date": "2024-01-20",
+      "thumbUrl": "/api/images/thumbs/2.jpg",
+      "description": "Descubra como funcionam os IPOs, como participar e quais são os riscos e oportunidades desta modalidade de investimento.",
+      "tags": ["ipo", "ações", "mercado-primario"],
+      "readTime": 12
+    },
+    {
+      "id": 3,
+      "title": "Inflação e Seus Impactos nos Investimentos",
+      "slug": "inflacao-impactos",
+      "date": "2024-01-25",
+      "thumbUrl": "/api/images/thumbs/3.jpg",
+      "description": "Entenda como a inflação afeta seus investimentos e estratégias para proteger seu patrimônio contra a desvalorização monetária.",
+      "tags": ["inflacao", "economia", "estrategia"],
+      "readTime": 10
+    },
+    {
+      "id": 4,
+      "title": "Diversificação de Portfólio: CDB + Ações",
+      "slug": "diversificacao-portfolio",
+      "date": "2024-02-01",
+      "thumbUrl": "/api/images/thumbs/4.jpg",
+      "description": "Aprenda como combinar diferentes tipos de investimentos para reduzir riscos e potencializar retornos.",
+      "tags": ["diversificacao", "portfolio", "cdb", "acoes"],
+      "readTime": 15
+    },
+    {
+      "id": 5,
+      "title": "Simulador de Investimentos: Como Usar",
+      "slug": "como-usar-simulador",
+      "date": "2024-02-05",
+      "thumbUrl": "/api/images/thumbs/5.jpg",
+      "description": "Guia completo sobre como utilizar nosso simulador para projetar seus investimentos e tomar decisões mais informadas.",
+      "tags": ["simulador", "ferramenta", "planejamento"],
+      "readTime": 6
+    }
+  ],
+  "lastUpdated": "2024-02-05T10:00:00Z"
+}

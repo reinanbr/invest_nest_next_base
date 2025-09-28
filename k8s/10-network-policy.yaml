@@ -1,0 +1,84 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: investsim-network-policy
+  namespace: investsim-pro
+  labels:
+    app: investsim-pro
+spec:
+  podSelector:
+    matchLabels:
+      app: investsim-pro
+  policyTypes:
+  - Ingress
+  - Egress
+  
+  # Regras de entrada
+  ingress:
+  # Frontend pode receber tráfego do Ingress Controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    to:
+    - podSelector:
+        matchLabels:
+          component: frontend
+    ports:
+    - protocol: TCP
+      port: 3000
+  
+  # Backend pode receber tráfego do Frontend
+  - from:
+    - podSelector:
+        matchLabels:
+          component: frontend
+    to:
+    - podSelector:
+        matchLabels:
+          component: backend
+    ports:
+    - protocol: TCP
+      port: 3000
+  
+  # Backend pode receber tráfego do Ingress Controller (para API direta)
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    to:
+    - podSelector:
+        matchLabels:
+          component: backend
+    ports:
+    - protocol: TCP
+      port: 3000
+  
+  # Regras de saída
+  egress:
+  # Permitir DNS
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  
+  # Frontend pode acessar Backend
+  - from:
+    - podSelector:
+        matchLabels:
+          component: frontend
+    to:
+    - podSelector:
+        matchLabels:
+          component: backend
+    ports:
+    - protocol: TCP
+      port: 3000
+  
+  # Permitir tráfego HTTPS para atualizações (opcional)
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443

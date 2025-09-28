@@ -1,0 +1,313 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+[data-theme="dark"] {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Tema Trader Dark */
+.trader-dark {
+  --bg-primary: #0a0e17;
+  --bg-secondary: #1a1e2e;
+  --bg-tertiary: #2a2e3e;
+  --text-primary: #ffffff;
+  --text-secondary: #b4b9c7;
+  --text-muted: #6b7280;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+  --accent-blue: #3b82f6;
+  --accent-yellow: #f59e0b;
+  --border-color: #374151;
+  --hover-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Animações suaves */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Componentes customizados */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-card {
+  background: rgba(26, 30, 46, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(55, 65, 81, 0.5);
+}
+
+.trading-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.trading-card:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--accent-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+}
+
+/* Botões */
+.btn-primary {
+  background: var(--accent-blue);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--accent-blue);
+  border: 2px solid var(--accent-blue);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--accent-blue);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-success {
+  background: var(--accent-green);
+  color: white;
+}
+
+.btn-success:hover {
+  background: #059669;
+}
+
+.btn-danger {
+  background: var(--accent-red);
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+/* Inputs */
+.input-trader {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.input-trader:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input-trader::placeholder {
+  color: var(--text-muted);
+}
+
+/* Cards de métricas */
+.metric-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.metric-positive {
+  color: var(--accent-green);
+}
+
+.metric-negative {
+  color: var(--accent-red);
+}
+
+.metric-neutral {
+  color: var(--accent-blue);
+}
+
+/* Tabelas */
+.table-trader {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table-trader th,
+.table-trader td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table-trader th {
+  background: var(--bg-tertiary);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.table-trader td {
+  color: var(--text-secondary);
+}
+
+.table-trader tr:hover td {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* Loading spinner */
+.spinner {
+  border: 2px solid var(--border-color);
+  border-top: 2px solid var(--accent-blue);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .trading-card {
+    padding: 1rem;
+  }
+  
+  .metric-card {
+    padding: 1rem;
+  }
+  
+  .table-trader th,
+  .table-trader td {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Estilos para artigos */
+.article-content h2 {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem 0;
+}
+
+.article-content h3 {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem 0;
+}
+
+.article-content p {
+  margin: 1rem 0;
+  line-height: 1.7;
+}
+
+.article-content ul,
+.article-content ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.article-content li {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.article-content strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.article-content code {
+  background: var(--bg-tertiary);
+  color: var(--accent-blue);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}

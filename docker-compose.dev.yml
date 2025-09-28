@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # Backend service (NestJS)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: investsim-backend-dev
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    volumes:
+      # Mount data directory for file-based storage
+      - ./backend/data:/app/data:ro
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1'
+        reservations:
+          memory: 256M
+          cpus: '0.1'
+    networks:
+      - investsim-network
+
+  # Frontend service (Next.js)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: investsim-frontend-dev
+    restart: unless-stopped
+    ports:
+      - "5099:3000"
+    environment:
+      - NODE_ENV=development
+      - API_BASE_URL=http://backend:3000
+      - NEXT_TELEMETRY_DISABLED=1
+    depends_on:
+      - backend
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1'
+        reservations:
+          memory: 256M
+          cpus: '0.1'
+    networks:
+      - investsim-network
+
+networks:
+  investsim-network:
+    driver: bridge

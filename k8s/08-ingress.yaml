@@ -1,0 +1,59 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: investsim-ingress
+  namespace: investsim-pro
+  labels:
+    app: investsim-pro
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"  # Se usar cert-manager
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - investsim.yourdomain.com  # Substitua pelo seu domínio
+    - api.investsim.yourdomain.com
+    secretName: investsim-tls-secret
+  rules:
+  # Frontend - Aplicação principal
+  - host: investsim.yourdomain.com  # Substitua pelo seu domínio
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: investsim-frontend-service
+            port:
+              number: 5099
+  
+  # Backend - API
+  - host: api.investsim.yourdomain.com  # Substitua pelo seu domínio
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: investsim-backend-service
+            port:
+              number: 3000
+  
+  # Alternativa: API no mesmo domínio com path /api
+  - host: investsim.yourdomain.com
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: investsim-backend-service
+            port:
+              number: 3000
