@@ -40,7 +40,7 @@ COPY --from=builder --chown=nestjs:nodejs /app/data ./data
 USER nestjs
 
 # Expose port
-EXPOSE 5098
+EXPOSE 5598
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \

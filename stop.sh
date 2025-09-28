@@ -38,7 +38,7 @@ if [ -f ".frontend.pid" ]; then
 fi
 
 # Parar processos por porta
-for port in 5098 5099; do
+for port in 5598 5099; do
     if lsof -ti:$port >/dev/null 2>&1; then
         lsof -ti:$port | xargs kill -9 2>/dev/null || true
         log "${GREEN}✅ Processos na porta $port parados${NC}"

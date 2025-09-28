@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # Backend - NestJS na porta 5598
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile.simple
+    container_name: investsim-backend
+    ports:
+      - "5598:5598"
+    environment:
+      - NODE_ENV=production
+      - PORT=5598
+    volumes:
+      - ./backend/data:/app/data
+    restart: unless-stopped
+
+  # Frontend - Next.js na porta 5099
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.simple
+    container_name: investsim-frontend
+    ports:
+      - "5099:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://localhost:5598
+      - API_BASE_URL=http://backend:5598
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+networks:
+  default:
+    driver: bridge

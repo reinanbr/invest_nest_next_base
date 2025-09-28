@@ -12,7 +12,7 @@ CYAN='\033[0;36m'
 NC='\033[0m'
 
 FRONTEND_PORT=5099
-BACKEND_PORT=5098
+BACKEND_PORT=5598
 
 print_header() {
     clear
@@ -110,9 +110,9 @@ check_logs() {
     if [ -f "logs/backend.log" ]; then
         echo -e "   ${GREEN}📄 Backend (últimas 3 linhas):${NC}"
         tail -3 logs/backend.log 2>/dev/null | sed 's/^/      /' || echo "      (vazio)"
-    elif [ -f "backend-5098.log" ]; then
+    elif [ -f "backend-5598.log" ]; then
         echo -e "   ${GREEN}📄 Backend (últimas 3 linhas):${NC}"
-        tail -3 backend-5098.log 2>/dev/null | sed 's/^/      /' || echo "      (vazio)"
+        tail -3 backend-5598.log 2>/dev/null | sed 's/^/      /' || echo "      (vazio)"
     fi
     
     # Frontend logs

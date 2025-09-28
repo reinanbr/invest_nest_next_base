@@ -1,0 +1,50 @@
+
+> investsim-backend@0.0.1 dev
+> nest start --watch
+
+[2J[3J[H[[90m12:16:36 AM[0m] Starting compilation in watch mode...
+
+[[90m12:16:38 AM[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +6ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mArticlesModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSimulationModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMarketModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mArticlesController {/api/articles}:[39m[38;5;3m +78ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/articles, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/articles/recent, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/articles/:slug, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mSimulationController {/api/simulation}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/simulation/cdb-basic, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/simulation/cdb-ipo, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/simulation/cdb-ipo-inflation, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/simulation/helpers/years-to-days, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/simulation/helpers/months-to-days, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mMarketController {/api/market}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/market/quotes, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/market/currencies, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/market/indices, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/market/chart/:symbol, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/market/rates/cdi, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/market/rates/selic, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/market/rates/cdi/history, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +1ms[39m
+[31m[Nest] 1106862  - [39m09/28/2025, 12:16:38 AM [31m  ERROR[39m [38;5;3m[NestApplication] [39m[31mError: listen EADDRINUSE: address already in use 127.0.0.1:5098[39m[38;5;3m +5ms[39m
+node:net:1940
+    const ex = new UVExceptionWithHostPort(err, 'listen', address, port);
+               ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5098
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at GetAddrInfoReqWrap.callback (node:net:2206:7)
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:134:8) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5098
+}
+
+Node.js v22.18.0

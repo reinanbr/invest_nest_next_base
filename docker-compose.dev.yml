@@ -9,10 +9,10 @@ services:
     container_name: investsim-backend-dev
     restart: unless-stopped
     ports:
-      - "3001:3000"
+      - "5598:5598"
     environment:
       - NODE_ENV=development
-      - PORT=3000
+      - PORT=5598
     volumes:
       # Mount data directory for file-based storage
       - ./backend/data:/app/data:ro
@@ -35,7 +35,7 @@ services:
       - "5099:3000"
     environment:
       - NODE_ENV=development
-      - API_BASE_URL=http://backend:3000
+      - API_BASE_URL=http://backend:5598
       - NEXT_TELEMETRY_DISABLED=1
     depends_on:
       - backend

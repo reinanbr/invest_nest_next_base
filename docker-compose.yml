@@ -9,10 +9,10 @@ services:
     container_name: investsim-backend
     restart: unless-stopped
     ports:
-      - "5098:5098"
+      - "5598:5598"
     environment:
       - NODE_ENV=production
-      - PORT=5098
+      - PORT=5598
       - HOST=0.0.0.0
     volumes:
       # Mount data directory for file-based storage
@@ -38,14 +38,14 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - API_BASE_URL=http://backend:3000
+        - API_BASE_URL=http://backend:5598
     container_name: investsim-frontend
     restart: unless-stopped
     ports:
       - "5099:3000"
     environment:
       - NODE_ENV=production
-      - API_BASE_URL=http://backend:3000
+      - API_BASE_URL=http://backend:5598
       - NEXT_TELEMETRY_DISABLED=1
     depends_on:
       backend:

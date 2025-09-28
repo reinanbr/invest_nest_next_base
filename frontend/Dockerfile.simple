@@ -1,0 +1,27 @@
+# Frontend Dockerfile - Next.js
+FROM node:18-alpine
+
+# Definir diretório de trabalho
+WORKDIR /app
+
+# Copiar arquivos de dependências
+COPY package*.json ./
+
+# Instalar dependências
+RUN npm ci
+
+# Copiar código fonte
+COPY . .
+
+# Definir variável de ambiente para API
+ENV NEXT_PUBLIC_API_URL=http://localhost:5598
+ENV API_BASE_URL=http://backend:5598
+
+# Criar build
+RUN npm run build
+
+# Expor porta
+EXPOSE 3000
+
+# Comando para iniciar
+CMD ["node", ".next/standalone/server.js"]

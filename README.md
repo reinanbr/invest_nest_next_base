@@ -2,7 +2,7 @@
 
 🚀 **Plataforma completa de simulação de investimentos e educação financeira**
 
-Site de investimentos focado em simulação, educação e visualização de dados, construído com NestJS + Next.js.
+Site de investimentos focado em simulação, educação e visualização de dados, construído com NestJS + Next.js e **containerizada com Docker**.
 
 ---
 
@@ -16,6 +16,7 @@ Site de investimentos focado em simulação, educação e visualização de dado
 - [Modelos de Dados](#-modelos-de-dados)
 - [Endpoints REST](#-endpoints-rest)
 - [Como Executar](#-como-executar)
+- [Docker Deployment](#-docker-deployment)
 - [Componentes Next.js](#-componentes-nextjs)
 - [Configurações](#-configurações)
 
@@ -30,6 +31,7 @@ O **InvestSim Pro** é uma plataforma educacional completa que oferece:
 - **Artigos educacionais** sobre mercado financeiro
 - **Interface moderna** com tema escuro
 - **Sistema baseado em arquivos** (sem banco de dados)
+- **Containerização Docker** para deploy simplificado
 
 ---
 
@@ -37,17 +39,18 @@ O **InvestSim Pro** é uma plataforma educacional completa que oferece:
 
 ```mermaid
 graph TB
-    subgraph "Frontend - Next.js"
-        A[Pages] --> B[Components]
-        B --> C[Services/API]
-        C --> D[Hooks]
-        B --> E[Tailwind CSS]
-    end
+    subgraph "Docker Environment"
+        subgraph "Frontend Container - Port 5099"
+            A[Next.js Pages] --> B[React Components]
+            B --> C[API Services]
+            C --> D[Custom Hooks]
+            B --> E[Tailwind CSS]
+        end
 
-    subgraph "Backend - NestJS"
-        F[Controllers] --> G[Services]
-        G --> H[File System]
-        H --> I[articles.json]
+        subgraph "Backend Container - Port 5598"
+            F[NestJS Controllers] --> G[Business Services]
+            G --> H[File System Storage]
+            H --> I[articles.json]
         H --> J[content/*.html]
         H --> K[images/thumbs/]
     end
@@ -280,20 +283,72 @@ GET    /api/market/rates/cdi/history # Histórico CDI
 
 ## 🚀 Como Executar
 
-### Instalação Completa
+### 🐳 Docker (Recomendado)
+
+**Produção (mais rápido)**
 ```bash
 # Clone o repositório
 git clone <repository-url>
 cd invest_nest_next_base
 
-# Instalar todas as dependências
-npm run install:all
+# Deploy automático
+docker-compose up -d
 
-# Executar em modo desenvolvimento (ambos simultaneamente)
-npm run dev
+# Verificar status
+docker-compose ps
+
+# Acessar aplicação
+# Frontend: http://localhost:5099
+# Backend:  http://localhost:5598/api/docs
 ```
 
-### Execução Individual
+**Desenvolvimento**
+```bash
+# Modo desenvolvimento
+docker-compose -f docker-compose.dev.yml up -d
+
+# Ver logs em tempo real
+docker-compose logs -f
+```
+
+**Scripts NPM para Docker**
+```bash
+npm run docker:up         # Subir produção
+npm run docker:dev        # Subir desenvolvimento  
+npm run docker:down       # Parar containers
+npm run docker:logs       # Ver logs
+npm run docker:clean      # Limpar tudo
+```
+
+---
+
+## 🔧 Docker Deployment
+
+### Configuração de Portas
+| Serviço  | Porta | Descrição |
+|----------|-------|-----------|
+| Frontend | 5099  | Interface web Next.js |
+| Backend  | 5598  | API REST NestJS + Swagger |
+
+### Scripts de Gerenciamento
+```bash
+./deploy.sh           # Deploy completo automatizado
+./test-complete.sh    # Testes completos
+./monitor.sh          # Monitoramento
+./menu.sh            # Menu interativo
+```
+
+### Recursos & Limites
+- **Memória**: 2GB por serviço
+- **CPU**: 1 core por serviço  
+- **Networking**: Interno via Docker
+- **Health Checks**: Automáticos
+
+📖 **Documentação completa**: [README-DOCKER-ONLY.md](./README-DOCKER-ONLY.md)
+
+---
+
+### 💻 Desenvolvimento Local (sem Docker)
 
 #### Backend (NestJS) - Porta 3001
 ```bash
@@ -313,6 +368,15 @@ npm run dev
 
 # Aplicação disponível em:
 # http://localhost:3000
+```
+
+### Instalação Completa Local
+```bash
+# Instalar todas as dependências
+npm run install:all
+
+# Executar em modo desenvolvimento (ambos simultaneamente)
+npm run dev
 ```
 
 ### Build para Produção

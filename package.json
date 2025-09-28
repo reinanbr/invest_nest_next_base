@@ -11,7 +11,16 @@
     "build": "cd backend && npm run build && cd ../frontend && npm run build",
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "start:backend": "cd backend && npm run start:prod",
-    "start:frontend": "cd frontend && npm run start"
+    "start:frontend": "cd frontend && npm run start",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up -d",
+    "docker:dev:down": "docker-compose -f docker-compose.dev.yml down",
+    "docker:clean": "docker-compose down --rmi all --volumes --remove-orphans",
+    "docker:restart": "docker-compose restart",
+    "docker:status": "docker-compose ps"
   },
   "keywords": [
     "investments",

@@ -17,7 +17,7 @@ NC='\033[0m'
 
 # Variáveis
 FRONTEND_PORT=5099
-BACKEND_PORT=5098
+BACKEND_PORT=5598
 TEST_RESULTS=()
 FAILED_TESTS=()
 
@@ -316,8 +316,8 @@ test_logs() {
         else
             log "   ${YELLOW}⚠️  Log do backend vazio${NC}"
         fi
-    elif [ -f "backend-5098.log" ]; then
-        local backend_log_size=$(wc -l < backend-5098.log)
+    elif [ -f "backend-5598.log" ]; then
+        local backend_log_size=$(wc -l < backend-5598.log)
         if [ $backend_log_size -gt 0 ]; then
             log "   ${GREEN}✅ Log do backend: $backend_log_size linhas${NC}"
             ((log_checks++))

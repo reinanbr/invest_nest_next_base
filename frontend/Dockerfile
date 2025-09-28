@@ -19,7 +19,7 @@ COPY . .
 
 # Set environment variable for API URL
 ENV NEXT_TELEMETRY_DISABLED 1
-ENV API_BASE_URL=http://backend:3000
+ENV API_BASE_URL=http://backend:5598
 
 # Build the application
 RUN npm run build

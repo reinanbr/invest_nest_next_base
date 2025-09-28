@@ -65,10 +65,10 @@ check_services_status() {
     fi
     
     # Backend
-    if lsof -i:5098 >/dev/null 2>&1; then
-        echo -e "   ${GREEN}✅ Backend rodando (porta 5098)${NC}"
+    if lsof -i:5598 >/dev/null 2>&1; then
+        echo -e "   ${GREEN}✅ Backend rodando (porta 5598)${NC}"
     else
-        echo -e "   ${RED}❌ Backend não encontrado (porta 5098)${NC}"
+        echo -e "   ${RED}❌ Backend não encontrado (porta 5598)${NC}"
     fi
     
     # Docker
@@ -81,8 +81,8 @@ check_services_status() {
     echo
     echo -e "${BLUE}🌐 Endpoints:${NC}"
     echo -e "   Frontend: ${YELLOW}http://localhost:5099${NC}"
-    echo -e "   Backend:  ${YELLOW}http://localhost:5098${NC}"
-    echo -e "   API Docs: ${YELLOW}http://localhost:5098/api/docs${NC}"
+    echo -e "   Backend:  ${YELLOW}http://localhost:5598${NC}"
+    echo -e "   API Docs: ${YELLOW}http://localhost:5598/api/docs${NC}"
     echo
 }
 
@@ -99,8 +99,8 @@ show_logs() {
         1)
             if [ -f "logs/backend.log" ]; then
                 tail -f logs/backend.log
-            elif [ -f "backend-5098.log" ]; then
-                tail -f backend-5098.log
+            elif [ -f "backend-5598.log" ]; then
+                tail -f backend-5598.log
             else
                 echo "Log do backend não encontrado"
             fi
@@ -138,7 +138,7 @@ show_help() {
     echo
     echo -e "${GREEN}Arquitetura:${NC}"
     echo -e "   Frontend (Next.js): Porta 5099 - Público para nginx"
-    echo -e "   Backend (NestJS):   Porta 5098 - Localhost apenas"
+    echo -e "   Backend (NestJS):   Porta 5598 - Localhost apenas"
     echo -e "   Limites:           2GB RAM, 1 CPU por serviço"
     echo
     echo -e "${GREEN}Documentação Completa:${NC}"

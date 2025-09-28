@@ -1,105 +1,108 @@
-# InvestSim Pro - Makefile for Docker and Kubernetes
+# InvestSim Pro - Docker Only Makefile
 
-.PHONY: help build-local build-registry deploy-dev deploy-k8s status clean logs
+.PHONY: help build up down dev logs clean status restart test
 
 # Configurações
-REGISTRY ?= local
-TAG ?= latest
-NAMESPACE = investsim-pro
+COMPOSE_FILE = docker-compose.yml
+COMPOSE_DEV_FILE = docker-compose.dev.yml
 
-help: ## Mostrar ajuda
-	@echo "InvestSim Pro - Docker & Kubernetes Commands"
-	@echo ""
+help: ## Mostrar comandos disponíveis
+	@echo "InvestSim Pro - Docker Commands"
+	@echo "=========================================="
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+	@echo ""
+	@echo "URLs de Acesso:"
+	@echo "Frontend: http://localhost:5099"
+	@echo "Backend:  http://localhost:5598"
+	@echo "API Docs: http://localhost:5598/api/docs"
 
-# Docker Commands
-build-local: ## Build imagens Docker localmente
-	@echo "🚀 Building Docker images locally..."
-	@chmod +x scripts/build-images.sh
-	@./scripts/build-images.sh local $(TAG)
+# Docker Compose - Produção
+build: ## Build das imagens Docker
+	@echo "🚀 Building Docker images..."
+	@docker-compose -f $(COMPOSE_FILE) build --no-cache
 
-build-registry: ## Build e push imagens para registry
-	@echo "🚀 Building and pushing Docker images to registry..."
-	@chmod +x scripts/build-images.sh
-	@./scripts/build-images.sh $(REGISTRY) $(TAG)
+up: ## Subir aplicação em produção
+	@echo "🚀 Starting production environment..."
+	@docker-compose -f $(COMPOSE_FILE) up -d
 
-# Docker Compose Commands
-dev-up: ## Subir ambiente de desenvolvimento com Docker Compose
+down: ## Parar aplicação
+	@echo "🛑 Stopping application..."
+	@docker-compose -f $(COMPOSE_FILE) down
+
+restart: ## Reiniciar aplicação
+	@echo "🔄 Restarting application..."
+	@docker-compose -f $(COMPOSE_FILE) restart
+
+# Docker Compose - Desenvolvimento
+dev: ## Subir aplicação em modo desenvolvimento
 	@echo "🚀 Starting development environment..."
-	@docker-compose -f docker-compose.dev.yml up -d
+	@docker-compose -f $(COMPOSE_DEV_FILE) up -d
 
 dev-down: ## Parar ambiente de desenvolvimento
 	@echo "🛑 Stopping development environment..."
-	@docker-compose -f docker-compose.dev.yml down
+	@docker-compose -f $(COMPOSE_DEV_FILE) down
 
 dev-logs: ## Ver logs do ambiente de desenvolvimento
-	@docker-compose -f docker-compose.dev.yml logs -f
+	@docker-compose -f $(COMPOSE_DEV_FILE) logs -f
 
-prod-up: ## Subir ambiente de produção com Docker Compose
-	@echo "🚀 Starting production environment..."
-	@docker-compose up -d
+# Monitoramento
+logs: ## Ver logs da aplicação
+	@docker-compose -f $(COMPOSE_FILE) logs -f
 
-prod-down: ## Parar ambiente de produção
-	@echo "🛑 Stopping production environment..."
-	@docker-compose down
+logs-backend: ## Ver logs apenas do backend
+	@docker-compose -f $(COMPOSE_FILE) logs -f backend
 
-# Kubernetes Commands
-k8s-deploy: ## Deploy no Kubernetes
-	@echo "🚀 Deploying to Kubernetes..."
-	@chmod +x scripts/k8s-deploy.sh
-	@./scripts/k8s-deploy.sh deploy
+logs-frontend: ## Ver logs apenas do frontend
+	@docker-compose -f $(COMPOSE_FILE) logs -f frontend
 
-k8s-update: ## Atualizar deployment no Kubernetes
-	@echo "🔄 Updating Kubernetes deployment..."
-	@chmod +x scripts/k8s-deploy.sh
-	@./scripts/k8s-deploy.sh update
+status: ## Verificar status dos containers
+	@echo "📊 Container Status:"
+	@docker-compose -f $(COMPOSE_FILE) ps
+	@echo ""
+	@echo "🔍 Resource Usage:"
+	@docker stats --no-stream --format "table {{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.MemPerc}}"
 
-k8s-delete: ## Deletar recursos do Kubernetes
-	@echo "🗑️  Deleting from Kubernetes..."
-	@chmod +x scripts/k8s-deploy.sh
-	@./scripts/k8s-deploy.sh delete
-
-k8s-status: ## Ver status do Kubernetes
-	@echo "📊 Checking Kubernetes status..."
-	@chmod +x scripts/k8s-deploy.sh
-	@./scripts/k8s-deploy.sh status
-
-# Utility Commands
-logs-backend: ## Ver logs do backend no Kubernetes
-	@kubectl logs -f -l component=backend -n $(NAMESPACE)
-
-logs-frontend: ## Ver logs do frontend no Kubernetes
-	@kubectl logs -f -l component=frontend -n $(NAMESPACE)
-
+# Utilidades
 shell-backend: ## Conectar no shell do backend
-	@kubectl exec -it deployment/investsim-backend -n $(NAMESPACE) -- /bin/sh
+	@docker-compose -f $(COMPOSE_FILE) exec backend sh
 
-shell-frontend: ## Conectar no shell do frontend  
-	@kubectl exec -it deployment/investsim-frontend -n $(NAMESPACE) -- /bin/sh
+shell-frontend: ## Conectar no shell do frontend
+	@docker-compose -f $(COMPOSE_FILE) exec frontend sh
 
-port-forward-backend: ## Port forward para backend (localhost:3001)
-	@kubectl port-forward service/investsim-backend-service -n $(NAMESPACE) 3001:3000
+# Limpeza
+clean: ## Limpar containers, volumes e imagens
+	@echo "🧹 Cleaning up Docker resources..."
+	@docker-compose -f $(COMPOSE_FILE) down --rmi all --volumes --remove-orphans
+	@docker-compose -f $(COMPOSE_DEV_FILE) down --rmi all --volumes --remove-orphans
+	@docker system prune -f
 
-port-forward-frontend: ## Port forward para frontend (localhost:5099)
-	@kubectl port-forward service/investsim-frontend-service -n $(NAMESPACE) 5099:5099
+clean-light: ## Limpar apenas containers parados
+	@echo "🧹 Cleaning stopped containers..."
+	@docker-compose -f $(COMPOSE_FILE) down
+	@docker-compose -f $(COMPOSE_DEV_FILE) down
 
-# Clean Commands
-clean-docker: ## Limpar imagens Docker não utilizadas
-	@echo "🧹 Cleaning unused Docker images..."
-	@docker system prune -a -f
-
-clean-k8s: ## Limpar recursos não utilizados do Kubernetes
-	@echo "🧹 Cleaning unused Kubernetes resources..."
-	@kubectl delete pods --field-selector=status.phase=Succeeded -n $(NAMESPACE)
-	@kubectl delete pods --field-selector=status.phase=Failed -n $(NAMESPACE)
-
-# All-in-one Commands
-full-deploy: build-local k8s-deploy ## Build local e deploy no Kubernetes
+# Deploy & Test
+deploy: build up ## Build e deploy completo
 	@echo "✅ Full deployment completed!"
+	@echo "🌐 Access application:"
+	@echo "   Frontend: http://localhost:5099" 
+	@echo "   Backend:  http://localhost:5598/api/docs"
 
-full-update: build-local k8s-update ## Build local e atualizar Kubernetes
-	@echo "✅ Full update completed!"
+test: ## Executar testes completos
+	@echo "🧪 Running complete tests..."
+	@chmod +x test-complete.sh
+	@./test-complete.sh
 
-# Monitoring
-monitor: ## Monitorar recursos do Kubernetes
-	@watch kubectl get pods,svc,ingress,hpa -n $(NAMESPACE)
+monitor: ## Monitorar aplicação (interativo)
+	@echo "📊 Starting monitoring..."
+	@chmod +x monitor.sh
+	@./monitor.sh
+
+# All-in-one
+fresh-start: clean deploy ## Limpeza completa e deploy
+	@echo "🎉 Fresh start completed!"
+
+# Aliases para compatibilidade
+prod-up: up ## Alias para 'up'
+prod-down: down ## Alias para 'down'
+full-deploy: deploy ## Alias para 'deploy'

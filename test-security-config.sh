@@ -29,27 +29,27 @@ else
     echo -e "   ${RED}❌ Frontend não está rodando na porta 5099${NC}"
 fi
 
-# Teste 2: Backend na porta 5098
-echo -e "\n${BLUE}2. Testando Backend (porta 5098)${NC}"
-if lsof -i:5098 >/dev/null 2>&1; then
-    response=$(curl -s -w "HTTPSTATUS:%{http_code}" http://localhost:5098/api/articles)
+# Teste 2: Backend na porta 5598
+echo -e "\n${BLUE}2. Testando Backend (porta 5598)${NC}"
+if lsof -i:5598 >/dev/null 2>&1; then
+    response=$(curl -s -w "HTTPSTATUS:%{http_code}" http://localhost:5598/api/articles)
     http_code=$(echo $response | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
     
     if [ "$http_code" -eq "200" ]; then
-        echo -e "   ${GREEN}✅ Backend respondendo na porta 5098${NC}"
+        echo -e "   ${GREEN}✅ Backend respondendo na porta 5598${NC}"
         echo -e "   ${GREEN}✅ API de artigos funcionando${NC}"
     else
         echo -e "   ${RED}❌ Backend erro HTTP $http_code${NC}"
     fi
 else
-    echo -e "   ${RED}❌ Backend não está rodando na porta 5098${NC}"
+    echo -e "   ${RED}❌ Backend não está rodando na porta 5598${NC}"
 fi
 
 # Teste 3: Verificar se backend está apenas no localhost
 echo -e "\n${BLUE}3. Testando Segurança do Backend${NC}"
-if netstat -tlnp | grep ":5098" | grep "127.0.0.1" >/dev/null 2>&1; then
+if netstat -tlnp | grep ":5598" | grep "127.0.0.1" >/dev/null 2>&1; then
     echo -e "   ${GREEN}✅ Backend escutando apenas no localhost${NC}"
-elif netstat -tlnp | grep ":5098" | grep "0.0.0.0" >/dev/null 2>&1; then
+elif netstat -tlnp | grep ":5598" | grep "0.0.0.0" >/dev/null 2>&1; then
     echo -e "   ${YELLOW}⚠️  Backend escutando em todas as interfaces${NC}"
     echo -e "   ${YELLOW}    (Isso é esperado em desenvolvimento)${NC}"
 else
@@ -58,11 +58,11 @@ fi
 
 # Teste 4: Documentação Swagger
 echo -e "\n${BLUE}4. Testando Documentação API${NC}"
-swagger_response=$(curl -s -w "HTTPSTATUS:%{http_code}" http://localhost:5098/api/docs)
+swagger_response=$(curl -s -w "HTTPSTATUS:%{http_code}" http://localhost:5598/api/docs)
 swagger_code=$(echo $swagger_response | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
 if [ "$swagger_code" -eq "200" ]; then
-    echo -e "   ${GREEN}✅ Swagger disponível em http://localhost:5098/api/docs${NC}"
+    echo -e "   ${GREEN}✅ Swagger disponível em http://localhost:5598/api/docs${NC}"
 else
     echo -e "   ${YELLOW}⚠️  Swagger pode não estar disponível${NC}"
 fi
@@ -70,14 +70,14 @@ fi
 # Teste 5: Comunicação Frontend -> Backend
 echo -e "\n${BLUE}5. Testando Comunicação Frontend -> Backend${NC}"
 # Verificar logs do frontend para conexões com API
-echo -e "   ${BLUE}ℹ️  Frontend configurado para usar http://localhost:5098${NC}"
+echo -e "   ${BLUE}ℹ️  Frontend configurado para usar http://localhost:5598${NC}"
 echo -e "   ${GREEN}✅ CORS configurado para aceitar apenas localhost:5099${NC}"
 
 # Resumo das portas
 echo -e "\n${BLUE}📋 Resumo da Configuração:${NC}"
 echo -e "   Frontend: ${YELLOW}http://localhost:5099${NC} (para nginx)"
-echo -e "   Backend:  ${YELLOW}http://localhost:5098${NC} (apenas localhost)"
-echo -e "   Swagger:  ${YELLOW}http://localhost:5098/api/docs${NC}"
+echo -e "   Backend:  ${YELLOW}http://localhost:5598${NC} (apenas localhost)"
+echo -e "   Swagger:  ${YELLOW}http://localhost:5598/api/docs${NC}"
 
 # Configuração nginx
 echo -e "\n${BLUE}📋 Configuração Nginx Recomendada:${NC}"
@@ -97,10 +97,10 @@ cat << 'EOF'
        }
    }
 
-   # Backend fica privado (5098) - não exposto externamente
+   # Backend fica privado (5598) - não exposto externamente
    
 EOF
 
 echo -e "\n${GREEN}🎉 Configuração de segurança concluída!${NC}"
 echo -e "${YELLOW}➤ Frontend público na porta 5099${NC}"
-echo -e "${YELLOW}➤ Backend privado na porta 5098${NC}"
+echo -e "${YELLOW}➤ Backend privado na porta 5598${NC}"

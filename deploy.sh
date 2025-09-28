@@ -18,7 +18,7 @@ NC='\033[0m'
 # Variáveis de configuração
 PROJECT_NAME="InvestSim Pro"
 FRONTEND_PORT=5099
-BACKEND_PORT=5098
+BACKEND_PORT=5598
 DEPLOY_MODE=""
 
 # Banner
