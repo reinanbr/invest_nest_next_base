@@ -21,9 +21,6 @@ services:
         limits:
           memory: 2G
           cpus: '1'
-        reservations:
-          memory: 256M
-          cpus: '0.1'
     networks:
       - investsim-network
 
